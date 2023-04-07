@@ -7,7 +7,48 @@ const crypto= require("crypto");
 
 
 //login 
-
+router.post("/login",
+body("Email").isEmail().withMessage("enter a valid  Email"),
+body("Password").isLength({min:8,max:15}).withMessage("Password should be between (8-25) character"),
+async (req,res)=>{
+    try{
+        //validdation request 
+        const errors=validationResult(req);
+        if (!errors.isEmpty()){
+            return res.status(400).json({error:errors.array()});
+        }
+        else{
+        //check email if its already exists
+            const query =util.promisify(conn.query).bind(conn);// transform sql query to promis to use (await / async)
+            const user = await query("select * from user_model where Email = ?",[req.body.Email]);
+            if (user.length==0){
+                res.status(404).json({
+                    errors:[{
+                    msg:"Email or Password not found",
+                    },
+                ],
+                });
+            }
+            // compare hashed password
+            const checkPassword= await bcrypt.compare(req.body.Password,user[0].Password);
+            if(checkPassword){
+                delete user[0].Password;
+                res.status(200).json(user);
+            }
+            else{
+                res.status(404).json({
+                    errors:[{
+                    msg:"Email or Password not found",
+                    },
+                ],
+                });
+            }
+            res.json("hi");
+        }
+}catch(err){
+    res.status(500).json({err:err});
+}
+});
 
 //register
 router.post("/register",
