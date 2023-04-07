@@ -6,8 +6,10 @@ const bcrypt = require ("bcrypt");
 const crypto= require("crypto");
 
 
-//login , register
+//login 
 
+
+//register
 router.post("/register",
 body("Email").isEmail().withMessage("enter a valid  Email"),
 body("Name").isString().withMessage("enter a valid  Name").isLength({min :10,max:20}).withMessage("Name should be between (10-20) character"),
