@@ -8,11 +8,11 @@ const crypto= require("crypto");
 
 //login 
 router.post("/login",
-body("Email").isEmail().withMessage("enter a valid  Email"),
-body("Password").isLength({min:8,max:15}).withMessage("Password should be between (8-25) character"),
+body("Email").isEmail().withMessage("enter a valid Email"),
+body("Password").isLength({min:8,max:15}).withMessage("Password should be between (8-15) character"),
 async (req,res)=>{
     try{
-        //validdation request 
+        //validdation request
         const errors=validationResult(req);
         if (!errors.isEmpty()){
             return res.status(400).json({error:errors.array()});
