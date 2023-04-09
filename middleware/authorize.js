@@ -4,7 +4,7 @@ const util = require ("util");
 const authorized =async (req,res,next)=>{
     const query =util.promisify(conn.query).bind(conn);
     const {token} = req.headers;
-    const user = await query("select * from user_model where token = ?");
+    const user = await query("select * from user_model where token = ?",[token]);
     if (user[0]){
         next();
     }

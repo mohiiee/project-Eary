@@ -21,10 +21,11 @@ async (req,res)=>{
         //check email if its already exists
             const query =util.promisify(conn.query).bind(conn);// transform sql query to promis to use (await / async)
             const user = await query("select * from user_model where Email = ?",[req.body.Email]);
+            const active = await query ("select Status from user_model");
             if (user.length==0){
                 res.status(404).json({
                     errors:[{
-                    msg:"Email or Password not found",
+                    msg:"Email not found",
                     },
                 ],
                 });
@@ -32,17 +33,18 @@ async (req,res)=>{
             // compare hashed password
             const checkPassword= await bcrypt.compare(req.body.Password,user[0].Password);
             if(checkPassword){
-                delete user[0].Password;
-                res.status(200).json(user);
+                    delete user[0].Password;
+                    res.status(200).json(user);
             }
             else{
                 res.status(404).json({
                     errors:[{
-                    msg:"Email or Password not found",
+                    msg:"wrong password",
                     },
                 ],
                 });
             }
+
             res.json("hi");
         }
 }catch(err){
@@ -53,7 +55,7 @@ async (req,res)=>{
 //register
 router.post("/register",
 body("Email").isEmail().withMessage("enter a valid  Email"),
-body("Name").isString().withMessage("enter a valid  Name").isLength({min :10,max:20}).withMessage("Name should be between (10-20) character"),
+body("Name").isString().withMessage("enter a valid  Name").isLength({min :8,max:20}).withMessage("Name should be between (8-20) character"),
 body("Password").isLength({min:8,max:15}).withMessage("Password should be between (8-25) character"),
 body("Phone").isMobilePhone(['ar-EG']).withMessage("plz enter valid phone number"),
 async (req,res)=>{
