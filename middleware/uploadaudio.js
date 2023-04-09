@@ -6,7 +6,7 @@ const path=require("path");
 //filename: asm al file al hyt3amlo save al segha bt3ato eh
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, 'Audio File/')
+      cb(null, 'AudioFolder/')
     },
     filename: function (req, file, cb) {
       cb(null, Date.now() + path.extname(file.originalname)) //esm al file be al date wy al extension

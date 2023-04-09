@@ -3,8 +3,7 @@ const con=require('../db/connection');
 const authorized=require("../middleware/authorize");
 const admin=require("../middleware/admin");
 const{ body, validationResult}=require("express-validator");
-const upload=require("../middleware/uploadaudio");
-
+const upload =require("../middleware/uploadaudio");
 //admin [create ,update,delet list(get all) ] 
 //Create The API
 router.post("/create",admin,
