@@ -1,18 +1,18 @@
 const router = require("express").Router();
 const con=require('../db/connection');
-
+const authorized=require("../middleware/authorize");
 //admin [create ,update,delet list(get all) ] 
-router.post("/create",(req,res)=>{
+router.post("/create",authorized,(req,res)=>{
     res.status(200).json({
         msg:"question created",
     });
 });
-router.put("/update",(req,res)=>{
+router.put("/update",authorized,(req,res)=>{
     res.status(200).json({
         msg:"question updated",
     });
 });
-router.delete("/delete",(req,res)=>{
+router.delete("/delete",authorized,(req,res)=>{
     res.status(200).json({
         msg:"question deleted",
     });
@@ -24,11 +24,7 @@ router.get("/list",(req,res)=>{
 });
 
 //user[list , answer]
-router.get("/view",(req,res)=>{
-    res.status(200).json({
-        questions:[],
-    });
-});
+
 router.post("/answer",(req,res)=>{
     res.status(200).json({
         msg:"answers added",

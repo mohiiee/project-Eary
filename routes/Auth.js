@@ -33,8 +33,17 @@ async (req,res)=>{
             // compare hashed password
             const checkPassword= await bcrypt.compare(req.body.Password,user[0].Password);
             if(checkPassword){
+                if(user[0].Status==[1]){
                     delete user[0].Password;
-                    res.status(200).json(user);
+                    res.status(200).json(user);}
+                    else {
+                        res.status(404).json({
+                            errors:[{
+                            msg:"your account is not activated yet wait till admin activate it",
+                            },
+                        ],
+                        });
+                    }
             }
             else{
                 res.status(404).json({
