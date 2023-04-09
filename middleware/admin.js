@@ -1,5 +1,6 @@
 const conn=require('../db/connection');
 const util = require ("util");
+const express=require("express");
 
 const admin =async (req,res,next)=>{
     const query =util.promisify(conn.query).bind(conn);
