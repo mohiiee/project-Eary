@@ -2,8 +2,8 @@ const router = require("express").Router();
 const conn=require('../db/connection');
 const{ body, validationResult}=require("express-validator");
 const util =require("util");
-const bcrypt = require ("bcrypt");
-const crypto= require("crypto");
+const bcrypt = require ("bcrypt"); //3shan a3mal compared ll pass al hena wy al fe al database al hashed 
+const crypto= require("crypto");// bt3aml generate ll token
 
 
 //login 
@@ -35,7 +35,7 @@ async (req,res)=>{
             if(checkPassword){
                 if(user[0].Status==[1]){
                     delete user[0].Password;
-                    res.status(200).json(user);}
+                    res.status(200).json(user);}// law al status be 1 wy al user active al pass myzhrlesh fe al postman
                     else {
                         res.status(404).json({
                             errors:[{
