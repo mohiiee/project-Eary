@@ -13,5 +13,5 @@ const storage = multer.diskStorage({
     }
   })
   
-  const upload = multer({ storage: storage }) // bstkhdem al storage al mwgoda fe al object dah
+  const upload = multer({ storage: storage }) // bstkhdem al storage al mwgoda fe al object dahw
   module.export=upload;
