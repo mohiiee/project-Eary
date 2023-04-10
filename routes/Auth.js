@@ -4,6 +4,7 @@ const{ body, validationResult}=require("express-validator");
 const util =require("util");
 const bcrypt = require ("bcrypt");
 const crypto= require("crypto");
+const admin = require("../middleware/admin");
 
 
 //login 
@@ -108,6 +109,48 @@ async (req,res)=>{
         res.status(500).json({err:err});
     }
 });
+
+// activate account
+router.put("/active"
+,admin,
+body("Email").isEmail().withMessage("enter a valid Email"),
+async (req,res)=>{
+    try{
+        //validdation request
+        const errors=validationResult(req);
+        if (!errors.isEmpty()){
+            return res.status(400).json({error:errors.array()});
+        }
+        else{
+        //check email if its already exists
+            const query =util.promisify(conn.query).bind(conn);// transform sql query to promis to use (await / async)
+            const user = await query("select * from user_model where Email = ?",[req.body.Email]);
+            const active = await query ("select Status from user_model");
+            if (user.length==0){
+                res.status(404).json({
+                    errors:[{
+                    msg:"Email not found",
+                    },
+                ],
+                });
+            }
+            //check if status is active or not 
+            if(user[0].Status==[1]){
+                res.status(404).json({
+                    msg:"account is already activated"
+                });
+            }
+            else {
+                await query("update user_model SET Status ='1' where Email = ? ",user[0].Email);
+                res.status(200).json({
+                    mag:"account activated"
+                });
+            }
+}}catch(err){
+    res.status(500).json({err:err});
+}
+});
+
 
 
 
