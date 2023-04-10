@@ -18,7 +18,7 @@ body("Questions").isString().withMessage("Please Enter your Questions").isLength
          return res.status(400).json({error:errors.array()});
      }
     res.status(200).json({
-        msg:req.body,
+        msg:req.file,
     });
 });
 router.put("/update",admin,(req,res)=>{
