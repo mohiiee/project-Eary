@@ -33,8 +33,10 @@ async (req,res)=>{
             // compare hashed password
             const checkPassword= await bcrypt.compare(req.body.Password,user[0].Password);
             if(checkPassword){
+                // btcheck  law al account active 
                 if(user[0].Status==[1]){
                     delete user[0].Password;
+                    // bt print al data bt3ty
                     res.status(200).json(user);}
                     else {
                         res.status(404).json({
