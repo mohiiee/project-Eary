@@ -26,3 +26,4 @@ app.listen(4000.,"localhost",()=>{
 // api routes 
 app.use("/auth",auth);
 app.use("/questions",questions);
+app.use("/TextQuestions",TextQuestions);

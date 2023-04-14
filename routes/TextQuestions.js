@@ -10,7 +10,7 @@ const fs = require("fs");
 // create new question in questions table in database
 router.post("/add",
 body("Question").isString().withMessage("Please Enter your Question"),
-body("AudioID").isNumeric().withMessage("enter valid audio id"),
+body("AudioID").isNumeric().withMessage("enter valid audio id"), //foregin key
 async(req,res)=>{
     try{
      //validdation request // law fe error hyrg3aly 
@@ -30,11 +30,12 @@ async(req,res)=>{
     }
     // prepare question object
     const Ques={
-        Question:req.body.Name,
+        Question:req.body.Question,
+        AudioID:req.body.AudioID
     };
     // insert into database
     //const query =util.promisify(conn.query).bind(conn);// transform sql query to promis to use (await / async)
-    await query("insert into questions set ?",Ques);
+    await query("insert into questions set  ?",Ques);
 
     res.status(200).json({
         msg:"question created",
