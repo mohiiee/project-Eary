@@ -9,10 +9,10 @@ const fs = require("fs");
 
 //admin [create ,update,delet list(get all) ] 
 //Create The API
+//add new quesiton audio
 router.post("/create",admin,
 upload.single("Audio"),
 body("Name").isString().withMessage("Please Enter your Question Name").isLength({min:8,max:20}).withMessage("Question Name should be at least 8 character"),
-body("Questions").isString().withMessage("Please Enter your Questions").isLength({min:8,max:200}).withMessage("Questions should be at least 8 character"),
 async(req,res)=>{
     try{
      //validdation request // law fe error hyrg3aly 
@@ -31,7 +31,6 @@ async(req,res)=>{
     // prepare question object
     const Ques={
         Name:req.body.Name,
-        Questions: req.body.Questions,
         AudioFile :req.file.filename
     };
     // insert into database
@@ -51,7 +50,6 @@ router.put("/update/:ID",
 admin,
 upload.single("Audio"),
 body("Name").isString().withMessage("Please Enter your Question Name").isLength({min:8,max:20}).withMessage("Question Name should be at least 8 character"),
-body("Questions").isString().withMessage("Please Enter your Questions").isLength({min:8,max:200}).withMessage("Questions should be at least 8 character"),
 async(req,res)=>{
     try{
      //validdation request // law fe error hyrg3aly
@@ -71,7 +69,6 @@ async(req,res)=>{
     // prepare question object
     const Ques={
         Name: req.body.Name,
-        Questions:req.body.Questions
     }
     // lw 3ayz a8yr el audio file 
     if (req.file){

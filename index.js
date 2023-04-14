@@ -13,6 +13,7 @@ app.use(cors());//allow http request localhosts
 // require moudles 
  const auth = require("./routes/Auth");
  const questions = require("./routes/questions");
+ const TextQuestions = require("./routes/TextQuestions");
 const { log } = require("console");
 
 //run the app
