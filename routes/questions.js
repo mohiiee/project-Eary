@@ -150,9 +150,5 @@ async(req,res)=>{
 });
 //user[list , answer]
 
-router.post("/answer",authorized,(req,res)=>{
-    res.status(200).json({
-        msg:"answers added",
-    });
-});
+
 module.exports = router;

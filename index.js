@@ -14,6 +14,8 @@ app.use(cors());//allow http request localhosts
  const auth = require("./routes/Auth");
  const questions = require("./routes/questions");
  const TextQuestions = require("./routes/TextQuestions");
+ const answers = require("./routes/answers");
+ const answers = require("./routes/userAnswers");
 const { log } = require("console");
 
 //run the app
@@ -27,3 +29,5 @@ app.listen(4000.,"localhost",()=>{
 app.use("/auth",auth);
 app.use("/questions",questions);
 app.use("/TextQuestions",TextQuestions);
+app.use("/answers",answers);
+app.use("/userAnswers",userAnswers);
