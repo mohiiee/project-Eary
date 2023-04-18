@@ -11,11 +11,11 @@ const cors = require("cors")
 app.use(cors());//allow http request localhosts 
 
 // require moudles 
- const auth = require("./routes/Auth");
- const questions = require("./routes/questions");
- const TextQuestions = require("./routes/TextQuestions");
- const answers = require("./routes/answers");
- const answers = require("./routes/userAnswers");
+const auth = require("./routes/Auth");
+const questions = require("./routes/questions");
+const TextQuestions = require("./routes/TextQuestions");
+const answers = require("./routes/answers");
+const userAnswers = require("./routes/userAnswers");
 const { log } = require("console");
 
 //run the app
