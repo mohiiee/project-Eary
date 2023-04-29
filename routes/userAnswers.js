@@ -62,11 +62,17 @@ async(req,res)=>{
     // insert into database
     //const query =util.promisify(conn.query).bind(conn);// transform sql query to promis to use (await / async)
     await query("insert into useranswers set ?",Ques);
-
+    //check if answer is right or not 
+    const checkkk=await query ("select Periority from answers where answer =?",[req.body.answer])
+    if (checkkk=="1"){
+        await query("UPDATE useranswers SET rightanswer='1' WHERE answer=?",[req.body.answer])
+    
     res.status(200).json({
         msg:"answer added",
     });
     }
+}
+
     catch(err){
         res.status(500).json(err);
     }
