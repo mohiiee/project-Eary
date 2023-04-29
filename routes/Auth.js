@@ -151,6 +151,51 @@ async (req,res)=>{
 }
 });
 
+router.put("/update/:ID",
+admin,
+body("Email").isEmail().withMessage("enter a valid  Email"),
+body("Name").isString().withMessage("enter a valid  Name").isLength({min :8,max:20}).withMessage("Name should be between (8-20) character"),
+body("Password").isLength({min:8,max:15}).withMessage("Password should be between (8-25) character"),
+body("Phone").isMobilePhone(['ar-EG']).withMessage("plz enter valid phone number"),async(req,res)=>{
+    try{
+     //validdation request // law fe error hyrg3aly
+    const query =util.promisify(conn.query).bind(conn);// transform sql query to promis to use (await / async)
+    const errors=validationResult(req);
+    if (!errors.isEmpty()){
+        return res.status(400).json({error:errors.array()});
+    }
+    // 2- check if user  exist
+    const Q= await query("select * from user_model where ID= ? ",[req.params.ID]);
+    if (!Q[0]){
+        res.status(404).json({
+            msg:"user not found"
+        });
+    }
+    
+    // prepare question object
+    const Ques={
+        Email: req.body.Email,
+        Name: req.body.Name,
+        Password: req.body.Password,
+        Phone: req.body.Phone,
+    }
+    // lw 3ayz a8yr el audio file 
+    
+    //update question
+        await query("update user_model set ? where id =?",
+        [
+            Ques,
+            Q[0].ID
+        ]);
+        res.status(200).json({
+            msg:"user updated"
+        });
+    }
+    catch(err){
+        res.status(500).json(err);
+    }
+});
+
 
 
 
